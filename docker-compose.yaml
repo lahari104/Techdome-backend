@@ -1,0 +1,24 @@
+services:
+  frontend:
+    build:
+      context: ../Techdome-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=mongodb://db:27017/mydatabase  # Ensure this line is present
+      - PORT=3000  # Ensure you define the port here
+    depends_on:
+      - db
+
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"

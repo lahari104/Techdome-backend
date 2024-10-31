@@ -1,3 +1,24 @@
+const mongoose = require("mongoose");
+
+async function connectToDatabase() {
+    try {
+        if (!process.env.DATABASE_URL) {
+            throw new Error("Database connection string is not defined in environment variables.");
+        }
+        await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log("Connection established...!");
+    } catch (error) {
+        console.error("Error connecting to the database:", error.message);
+    }
+}
+
+connectToDatabase();
+
+ubuntu@ip-172-31-22-48:~/techdome-project/Techdome-backend/database$ cat ser
+cat: ser: No such file or directory
+ubuntu@ip-172-31-22-48:~/techdome-project/Techdome-backend/database$ cd ../
+ubuntu@ip-172-31-22-48:~/techdome-project/Techdome-backend$
+ubuntu@ip-172-31-22-48:~/techdome-project/Techdome-backend$ cat server.js
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
@@ -7,7 +28,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary');
 
 dotenv.config();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 
 ////////------ cloudinary -------//////////

@@ -1,7 +1,15 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DB).then(() => {
-    console.log("connection established...!");
-}).catch((error) => {
-    console.log(error);
-})
+async function connectToDatabase() {
+    try {
+        if (!process.env.DATABASE_URL) {
+            throw new Error("Database connection string is not defined in environment variables.");
+        }
+        await mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log("Connection established...!");
+    } catch (error) {
+        console.error("Error connecting to the database:", error.message);
+    }
+}
+
+connectToDatabase();
